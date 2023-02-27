@@ -16,29 +16,8 @@ import java.util.List;
 public class DemoController {
     private final UserRepository userRepository;
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<String> helloWorld() {
         return ResponseEntity.ok("Hello World!");
-    }
-
-    @GetMapping("/users")
-    public ResponseEntity<List<User>> users() {
-        return ResponseEntity.ok(this.userRepository.findAll());
-    }
-
-//    Test user signup
-    @PostMapping("/users/signup")
-    public ResponseEntity<String> signupUser(@RequestBody SignupUserInput request) {
-        var user = User
-                .builder()
-                .email(request.getEmail())
-                .name(request.getName())
-                .password(request.getPassword())
-                .role(Role.USER)
-                .build();
-
-        userRepository.save(user);
-
-        return ResponseEntity.ok("User Created Successfully");
     }
 }
