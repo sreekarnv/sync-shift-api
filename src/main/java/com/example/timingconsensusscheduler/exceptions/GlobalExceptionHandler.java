@@ -2,6 +2,7 @@ package com.example.timingconsensusscheduler.exceptions;
 
 import com.example.timingconsensusscheduler.dto.FieldErrorDto;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.*;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,13 +26,36 @@ public class GlobalExceptionHandler {
                 .body(getFieldErrorsMap(errors));
     }
 
-    @ExceptionHandler({UsernameNotFoundException.class, NoSuchElementException.class})
+    @ExceptionHandler({
+            UsernameNotFoundException.class,
+            NoSuchElementException.class,
+    })
     public ResponseEntity<Map<String, List<String>>> handleNotFoundException(UsernameNotFoundException ex) {
         List<String> errors = Collections.singletonList(ex.getMessage());
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(getListErrorMap(errors));
     }
+
+    @ExceptionHandler(
+            DataIntegrityViolationException.class
+    )
+    public ResponseEntity<String> handleNotFoundException(DataIntegrityViolationException ex) {
+        String message = Objects.requireNonNull(ex.getRootCause()).getMessage();
+
+        if (message.contains("duplicate key value violates unique constraint")) {
+            String[] parts = message.split("\"");
+            String detailMessage = parts[2];
+            String fieldValue = detailMessage.substring(detailMessage.indexOf("(") + 1, detailMessage.indexOf(")"));
+            String errorMessage = "This " + fieldValue + " is already taken.";
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessage);
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Something Went Wrong!!");
+    }
+
 
     @ExceptionHandler(AuthenticationException.class)
     @ResponseBody
