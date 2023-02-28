@@ -9,7 +9,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SigninUserDto {
+public class SigninUserInputDto {
     @NotNull(message =  "Please provide you email address")
     @NotBlank(message = "Your email address cannot be empty")
     @Email(message = "Please provide a valid email address")
@@ -19,3 +19,4 @@ public class SigninUserDto {
     @NotBlank(message = "Password cannot be empty")
     private String password;
 }
+

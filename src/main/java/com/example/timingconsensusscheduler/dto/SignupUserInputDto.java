@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SignupUserDto {
+public class SignupUserInputDto {
     @NotBlank(message = "Please provide your full name")
     @NotNull(message = "Please provide your full name")
     @Size(min = 3, max = 30, message = "Invalid Name: Must be of 3 - 30 characters")

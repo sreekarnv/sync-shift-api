@@ -1,8 +1,9 @@
 package com.example.timingconsensusscheduler.controllers;
 
-import com.example.timingconsensusscheduler.dto.SigninUserDto;
-import com.example.timingconsensusscheduler.dto.SignupUserDto;
-import com.example.timingconsensusscheduler.entity.User;
+import com.example.timingconsensusscheduler.dto.SigninUserInputDto;
+import com.example.timingconsensusscheduler.dto.SigninUserResponseDto;
+import com.example.timingconsensusscheduler.dto.SignupUserInputDto;
+import com.example.timingconsensusscheduler.dto.SignupUserResponseDto;
 import com.example.timingconsensusscheduler.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,16 +19,16 @@ public class UserController {
 
 
     @PostMapping("/signup")
-    public ResponseEntity<User> signupUser(@RequestBody @Valid SignupUserDto request) {
-        var user = userService.insertUser(request);
-        return new ResponseEntity<User>(user, HttpStatus.CREATED);
+    public ResponseEntity<SignupUserResponseDto> signupUser(@RequestBody @Valid SignupUserInputDto request) {
+        var token = userService.registerUser(request);
+        return new ResponseEntity<SignupUserResponseDto>(token, HttpStatus.CREATED);
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<User> signInUser(
-            @RequestBody @Valid SigninUserDto request
+    public ResponseEntity<SigninUserResponseDto> signInUser(
+            @RequestBody @Valid SigninUserInputDto request
         ) {
-        var user = userService.getOneByEmail(request);
-        return ResponseEntity.ok(user);
+        var token = userService.loginUser(request);
+        return new ResponseEntity<SigninUserResponseDto>(token, HttpStatus.ACCEPTED);
     }
 }
