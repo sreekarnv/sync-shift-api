@@ -1,10 +1,8 @@
 package com.example.timingconsensusscheduler.services;
 
-import com.example.timingconsensusscheduler.dto.JwtPayloadDto;
-import com.example.timingconsensusscheduler.entity.User;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.example.timingconsensusscheduler.dto.*;
+import com.example.timingconsensusscheduler.entity.*;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,25 +25,26 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(User details) {
+    public String generateToken(UserDetails details) {
         return generateToken(new HashMap<>(), details);
     }
 
-    public String generateToken(Map<String, Object> extraClaims, User details) {
+    public String generateToken(Map<String, Object> extraClaims, UserDetails details) {
+        var _details = (User) details;
         var payload = new JwtPayloadDto(
-                details.getId(),
-                details.getName(),
-                details.getEmail(),
-                details.getRole()
+                _details.getId(),
+                _details.getName(),
+                _details.getEmail(),
+                _details.getRole()
         );
         extraClaims.put("user", payload);
 
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
-                .setSubject(details.getEmail())
+                .setSubject(details.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

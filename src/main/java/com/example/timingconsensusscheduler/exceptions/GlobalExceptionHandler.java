@@ -3,6 +3,7 @@ package com.example.timingconsensusscheduler.exceptions;
 import com.example.timingconsensusscheduler.dto.FieldErrorDto;
 
 import org.springframework.http.*;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -19,19 +20,30 @@ public class GlobalExceptionHandler {
         List<FieldErrorDto> errors = ex.getBindingResult().getFieldErrors().stream()
                 .map(err -> new FieldErrorDto(err.getField(), err.getDefaultMessage()))
                 .collect(Collectors.toList());
-        return new ResponseEntity<>(getFieldErrorsMap(errors), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(getFieldErrorsMap(errors));
     }
 
-    @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<Map<String, List<String>>> handleNotFoundException(NoSuchElementException ex) {
-        List<String> errors = Collections.singletonList(ex.getMessage());
-        return new ResponseEntity<>(getListErrorMap(errors), new HttpHeaders(), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(UsernameNotFoundException.class)
+    @ExceptionHandler({UsernameNotFoundException.class, NoSuchElementException.class})
     public ResponseEntity<Map<String, List<String>>> handleNotFoundException(UsernameNotFoundException ex) {
         List<String> errors = Collections.singletonList(ex.getMessage());
-        return new ResponseEntity<>(getListErrorMap(errors), new HttpHeaders(), HttpStatus.NOT_FOUND);
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(getListErrorMap(errors));
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    @ResponseBody
+    public ResponseEntity<Map<String, List<String>>> handleAuthenticationException(Exception ex) {
+        var message = Objects.equals(ex.getMessage(), "Bad credentials")
+            ? "Invalid Credentials. Please provide your correct email and password"
+            : ex.getMessage();
+
+        List<String> errors = Collections.singletonList(message);
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(getListErrorMap(errors));
     }
 
     private Map<String, List<String>> getListErrorMap(List<String> errors) {

@@ -17,7 +17,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 @EnableMethodSecurity(
         securedEnabled = true,
-        jsr250Enabled = true
+        jsr250Enabled = true,
+        prePostEnabled = true
 )
 public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
@@ -28,7 +29,7 @@ public class SecurityConfig {
         http.csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/**")
+                .requestMatchers("/api/v1/auth/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
