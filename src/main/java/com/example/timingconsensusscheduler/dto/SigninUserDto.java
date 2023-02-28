@@ -10,12 +10,12 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SigninUserDto {
-    @NotNull
-    @NotBlank
-    @Email(message = "Invalid email")
+    @NotNull(message =  "Please provide you email address")
+    @NotBlank(message = "Your email address cannot be empty")
+    @Email(message = "Please provide a valid email address")
     private String email;
 
-    @NotNull
-    @NotBlank
+    @NotNull(message =  "Please provide your password")
+    @NotBlank(message = "Password cannot be empty")
     private String password;
 }
