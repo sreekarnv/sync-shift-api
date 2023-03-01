@@ -18,12 +18,13 @@ public class UserService {
 
 
     public User insertUser(SignupUserInputDto data) {
+        var role = data.isStaff ? Role.STAFF : Role.STUDENT;
         var user = User
                 .builder()
                 .email(data.getEmail())
                 .name(data.getName())
                 .password(passwordEncoder.encode(data.getPassword()))
-                .role(Role.STUDENT)
+                .role(role)
                 .build();
        return userRepository.save(user);
     }

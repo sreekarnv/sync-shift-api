@@ -1,10 +1,9 @@
 package com.example.timingconsensusscheduler.dto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+
+import jakarta.validation.constraints.*;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Value;
 
 @Data
 @Builder
@@ -25,4 +24,7 @@ public class SignupUserInputDto {
     @NotBlank(message = "Password cannot be empty")
     @Size(min = 6, message = "Password must atleast contain 6 characters")
     private String password;
+
+    @Value("false")
+    public Boolean isStaff = false;
 }

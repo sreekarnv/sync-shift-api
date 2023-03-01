@@ -1,5 +1,6 @@
 package com.example.timingconsensusscheduler.services;
 
+import jakarta.validation.ValidationException;
 import lombok.*;
 import com.example.timingconsensusscheduler.dto.*;
 import org.springframework.security.authentication.*;
@@ -13,7 +14,15 @@ public class AuthService {
     private final JwtService jwtService;
 
 
+    public boolean validateBitsEmail(String email) {
+        return email.endsWith(".bits-pilani.ac.in");
+    }
+
     public SignupUserResponseDto registerUser(SignupUserInputDto input) {
+        if (!validateBitsEmail(input.getEmail())) {
+            throw new ValidationException("Please use your BITS email address.");
+        }
+
         var user = userService.insertUser(input);
         var jwtToken = jwtService.generateToken(user);
         return SignupUserResponseDto.builder().token(jwtToken).build();

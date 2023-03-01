@@ -2,6 +2,7 @@ package com.example.timingconsensusscheduler.exceptions;
 
 import com.example.timingconsensusscheduler.dto.FieldErrorDto;
 
+import jakarta.validation.ValidationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.*;
 import org.springframework.security.core.AuthenticationException;
@@ -40,7 +41,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(
             DataIntegrityViolationException.class
     )
-    public ResponseEntity<String> handleNotFoundException(DataIntegrityViolationException ex) {
+    public ResponseEntity<Map<String, List<String>>> handleNotFoundException(DataIntegrityViolationException ex) {
         String message = Objects.requireNonNull(ex.getRootCause()).getMessage();
 
         if (message.contains("duplicate key value violates unique constraint")) {
@@ -48,12 +49,24 @@ public class GlobalExceptionHandler {
             String detailMessage = parts[2];
             String fieldValue = detailMessage.substring(detailMessage.indexOf("(") + 1, detailMessage.indexOf(")"));
             String errorMessage = "This " + fieldValue + " is already taken.";
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessage);
+            List<String> errors = List.of(errorMessage);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(getListErrorMap(errors));
         }
 
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Something Went Wrong!!");
+                .body(getListErrorMap(List.of(new String[]{"Something Went Wrong!!"})));
+    }
+
+    @ExceptionHandler(
+            ValidationException.class
+    )
+    public ResponseEntity<Map<String, List<String>>> handleCustomValidationErrors(ValidationException ex) {
+        var message = ex.getMessage();
+        List<String> errors = Collections.singletonList(message);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(getListErrorMap(errors));
     }
 
 
