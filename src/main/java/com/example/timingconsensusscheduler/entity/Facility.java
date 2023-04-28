@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
+import java.time.LocalTime;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -27,4 +29,12 @@ public class Facility {
     @NotNull
     @NotBlank
     private String type;
+
+    private Boolean isAvailable;
+
+    @NotBlank
+    private LocalTime availableStartTime;
+
+    @NotBlank
+    private LocalTime availableEndTime;
 }
