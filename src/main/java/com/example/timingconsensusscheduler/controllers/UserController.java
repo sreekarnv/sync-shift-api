@@ -1,11 +1,12 @@
 package com.example.timingconsensusscheduler.controllers;
 
+import com.example.timingconsensusscheduler.dto.UserBaseDto;
 import com.example.timingconsensusscheduler.services.UserService;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.function.EntityResponse;
+import java.util.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -14,7 +15,15 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/")
-    public ResponseEntity<String> protectedRoute() {
-        return ResponseEntity.status(HttpStatus.OK).body("Message from protected Route");
+    public ResponseEntity<List<UserBaseDto>> getMembers() {
+       var users = userService.getAll();
+       return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(users);
+    }
+
+    @GetMapping("/health")
+    public ResponseEntity<String> getString() {
+        return ResponseEntity.status(HttpStatus.OK).body("Yo!!");
     }
 }

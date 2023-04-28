@@ -1,5 +1,6 @@
 package com.example.timingconsensusscheduler.entity;
 
+import com.example.timingconsensusscheduler.dto.UserBaseDto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -12,6 +13,23 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+@NamedNativeQuery(
+        name = "User.findAllByProjection",
+        query = "select id, name, email, role from users",
+        resultSetMapping = "Mapping.UserBaseDto"
+)
+@SqlResultSetMapping(
+    name = "Mapping.UserBaseDto",
+    classes = @ConstructorResult(
+        targetClass = UserBaseDto.class,
+        columns = {
+                @ColumnResult(name = "id"),
+                @ColumnResult(name = "name"),
+                @ColumnResult(name = "email"),
+                @ColumnResult(name = "role"),
+        }
+    )
+)
 @Data
 @Builder
 @NoArgsConstructor
