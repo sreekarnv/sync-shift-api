@@ -19,4 +19,5 @@ insert into users (id, name, email, password, role) values (18, 'Danit Tomes', '
 insert into users (id, name, email, password, role) values (19, 'Vanya Lenihan', 'vlenihani@hyderabad.bits-pilani.ac.in', '$2a$10$A0pNG09ZFV/c1XpfiDspuelJx4NkOAfc86BVT.s1spPbWn4BQuOgq', 'STAFF');
 insert into users (id, name, email, password, role) values (20, 'Ferguson Gray', 'fgrayj@hyderabad.bits-pilani.ac.in','$2a$10$A0pNG09ZFV/c1XpfiDspuelJx4NkOAfc86BVT.s1spPbWn4BQuOgq', 'STAFF');
 insert into users (id, name, email, password, role) values (21, 'Nertie Tunsley', 'ntunsley0@hyderabad.bits-pilani.ac.in', '$2a$10$A0pNG09ZFV/c1XpfiDspuelJx4NkOAfc86BVT.s1spPbWn4BQuOgq', 'STUDENT');
+insert into users (id, name, email, password, role) values (22, 'Admin', 'admin@hyderabad.bits-pilani.ac.in', '$2a$10$A0pNG09ZFV/c1XpfiDspuelJx4NkOAfc86BVT.s1spPbWn4BQuOgq', 'ADMIN');
 
