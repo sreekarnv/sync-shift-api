@@ -11,7 +11,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +40,17 @@ public class UserService {
         );
     }
 
+    public User findOneById(Integer id) {
+        return userRepository.findById(id).orElseThrow(
+                () -> new NoSuchElementException("User not found")
+        );
+    }
+
     public List<UserBaseDto> getAll() {
         return userRepository.findAllByProjection();
+    }
+
+    public void findOneAndUpdateDefaultSlots(User user, Time startTime, Time endTime) {
+        userRepository.updateDefaultSlots(startTime, endTime, user.getId());
     }
 }

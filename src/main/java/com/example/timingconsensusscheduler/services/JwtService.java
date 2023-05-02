@@ -35,7 +35,9 @@ public class JwtService {
                 _details.getId(),
                 _details.getName(),
                 _details.getEmail(),
-                _details.getRole()
+                _details.getRole(),
+                _details.getDefaultStartAvailableTime(),
+                _details.getDefaultEndAvailableTime()
         );
         extraClaims.put("user", payload);
 

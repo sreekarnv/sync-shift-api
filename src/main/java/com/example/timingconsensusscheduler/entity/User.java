@@ -4,12 +4,14 @@ import com.example.timingconsensusscheduler.dto.UserBaseDto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 import lombok.*;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.sql.Time;
 import java.util.Collection;
 import java.util.List;
 
@@ -52,6 +54,12 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private String role;
+
+    @Null
+    private Time defaultStartAvailableTime;
+
+    @Null
+    private Time defaultEndAvailableTime;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
