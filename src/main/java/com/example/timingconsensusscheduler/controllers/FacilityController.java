@@ -1,12 +1,18 @@
 package com.example.timingconsensusscheduler.controllers;
 
+import com.example.timingconsensusscheduler.dto.BookFacilitySlotRequestDto;
 import com.example.timingconsensusscheduler.entity.Facility;
 import com.example.timingconsensusscheduler.entity.FacilitySlot;
+import com.example.timingconsensusscheduler.entity.User;
 import com.example.timingconsensusscheduler.services.*;
+import jakarta.validation.Valid;
 import lombok.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import java.sql.Timestamp;
 import java.util.*;
 
 
@@ -45,6 +51,20 @@ public class FacilityController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(fs);
+    }
+
+    @CrossOrigin("http://localhost:3000")
+    @PostMapping("/slots/{id}")
+    public ResponseEntity<Boolean> bookFacilitySlot(
+            @PathVariable Integer id, @RequestBody @Valid BookFacilitySlotRequestDto body)
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        var user = (User) auth.getPrincipal();
+        facilitySlotService.bookSlot(
+                id,
+                user,
+                Timestamp.valueOf(body.getStartTimeStamp()), Timestamp.valueOf(body.getEndTimeStamp()));
+        return ResponseEntity.status(HttpStatus.OK).body(true);
     }
 
 //    @PostMapping("/slots/{id}")
