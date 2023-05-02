@@ -28,7 +28,7 @@ public class UserController {
     private final JwtService jwtService;
 
     @GetMapping("/")
-    public ResponseEntity<List<UserBaseDto>> getMembers() {
+    public ResponseEntity<List<User>> getMembers() {
        var users = userService.getAll();
        return ResponseEntity
                 .status(HttpStatus.OK)

@@ -14,8 +14,8 @@ import java.util.*;
 public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findByEmail(String email);
 
-    @Query(nativeQuery = true)
-    List<UserBaseDto> findAllByProjection();
+//    @Query(nativeQuery = true)
+//    List<UserBaseDto> findAllByProjection();
 
     @Transactional
     @Modifying

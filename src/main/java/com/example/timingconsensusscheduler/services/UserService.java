@@ -46,8 +46,8 @@ public class UserService {
         );
     }
 
-    public List<UserBaseDto> getAll() {
-        return userRepository.findAllByProjection();
+    public List<User> getAll() {
+        return userRepository.findAll();
     }
 
     public void findOneAndUpdateDefaultSlots(User user, Time startTime, Time endTime) {
