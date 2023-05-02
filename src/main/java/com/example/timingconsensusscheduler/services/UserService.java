@@ -1,6 +1,4 @@
 package com.example.timingconsensusscheduler.services;
-
-import com.example.timingconsensusscheduler.dto.UserBaseDto;
 import lombok.*;
 
 import com.example.timingconsensusscheduler.dto.SignupUserInputDto;
@@ -14,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Time;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -52,5 +51,21 @@ public class UserService {
 
     public void findOneAndUpdateDefaultSlots(User user, Time startTime, Time endTime) {
         userRepository.updateDefaultSlots(startTime, endTime, user.getId());
+    }
+
+    public void withdrawUser(Integer userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setIsWithdrawn(true);
+            user.setName(user.getName());
+            user.setEmail(user.getEmail());
+            user.setDefaultEndAvailableTime(null);
+            user.setDefaultStartAvailableTime(null);
+
+            userRepository.save(user);
+        } else {
+            throw new RuntimeException("User not found with id " + userId);
+        }
     }
 }

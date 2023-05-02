@@ -3,7 +3,6 @@ package com.example.timingconsensusscheduler.controllers;
 import com.example.timingconsensusscheduler.dto.CreateBookMemberSlotRequestDto;
 import com.example.timingconsensusscheduler.dto.DefaultAvailableRequestDto;
 import com.example.timingconsensusscheduler.dto.DefaultAvailableResponseDto;
-import com.example.timingconsensusscheduler.dto.UserBaseDto;
 import com.example.timingconsensusscheduler.entity.FacilitySlot;
 import com.example.timingconsensusscheduler.entity.MemberSlot;
 import com.example.timingconsensusscheduler.entity.User;
@@ -110,5 +109,12 @@ public class UserController {
     ) {
         var body = memberSlotService.findAll(id);
         return ResponseEntity.status(HttpStatus.OK).body(body);
+    }
+
+    @CrossOrigin("http://localhost:3000")
+    @PostMapping("/{userId}/withdraw")
+    public ResponseEntity<String> withdrawUser(@PathVariable Integer userId) {
+        userService.withdrawUser(userId);
+        return ResponseEntity.ok("User withdrawn successfully");
     }
 }

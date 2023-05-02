@@ -35,6 +35,8 @@ public class User implements UserDetails {
     private String password;
     private String role;
 
+    private Boolean isWithdrawn = false;
+
     @Null
     private Time defaultStartAvailableTime;
 
