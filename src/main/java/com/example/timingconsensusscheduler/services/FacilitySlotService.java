@@ -38,15 +38,4 @@ public class FacilitySlotService {
         facilitySlotRespository.save(fs);
     }
 
-//    public FacilitySlot create(Integer facility_id, Integer user_id, Timestamp start, Timestamp end) {
-//        var fs = FacilitySlot
-//                .builder()
-//                .facility(Facility.builder().id(facility_id).build())
-//                .user(User.builder().id(user_id).build())
-//                .startTimeStamp(start)
-//                .endTimeStamp(end)
-//                .build();
-
-//        facilitySlotRespository.i
-//    }
 }

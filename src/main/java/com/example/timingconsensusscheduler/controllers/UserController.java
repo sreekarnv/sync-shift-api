@@ -1,12 +1,15 @@
 package com.example.timingconsensusscheduler.controllers;
 
+import com.example.timingconsensusscheduler.dto.CreateBookMemberSlotRequestDto;
 import com.example.timingconsensusscheduler.dto.DefaultAvailableRequestDto;
 import com.example.timingconsensusscheduler.dto.DefaultAvailableResponseDto;
 import com.example.timingconsensusscheduler.dto.UserBaseDto;
 import com.example.timingconsensusscheduler.entity.FacilitySlot;
+import com.example.timingconsensusscheduler.entity.MemberSlot;
 import com.example.timingconsensusscheduler.entity.User;
 import com.example.timingconsensusscheduler.services.FacilitySlotService;
 import com.example.timingconsensusscheduler.services.JwtService;
+import com.example.timingconsensusscheduler.services.MemberSlotService;
 import com.example.timingconsensusscheduler.services.UserService;
 import jakarta.validation.Valid;
 import lombok.*;
@@ -17,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -26,6 +30,7 @@ public class UserController {
     private final UserService userService;
     private final FacilitySlotService facilitySlotService;
     private final JwtService jwtService;
+    private final MemberSlotService memberSlotService;
 
     @GetMapping("/")
     public ResponseEntity<List<User>> getMembers() {
@@ -82,5 +87,28 @@ public class UserController {
                         .token(token)
                 .build()
         );
+    }
+
+    @CrossOrigin("http://localhost:3000")
+    @PostMapping("/members/slots/{id}")
+    public ResponseEntity<Boolean> createBookMemberSlot(
+            @RequestBody @Valid CreateBookMemberSlotRequestDto body,
+            @PathVariable Integer id
+    ) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        var user = (User) auth.getPrincipal();
+
+        memberSlotService.bookSlot(id, user, Timestamp.valueOf(body.getStartTimeStamp()), Timestamp.valueOf(body.getEndTimeStamp()));
+
+        return ResponseEntity.status(HttpStatus.OK).body(true);
+    }
+
+    @CrossOrigin("http://localhost:3000")
+    @GetMapping("/members/slots/{id}")
+    public ResponseEntity<List<MemberSlot>> getMemberSlots(
+            @PathVariable Integer id
+    ) {
+        var body = memberSlotService.findAll(id);
+        return ResponseEntity.status(HttpStatus.OK).body(body);
     }
 }

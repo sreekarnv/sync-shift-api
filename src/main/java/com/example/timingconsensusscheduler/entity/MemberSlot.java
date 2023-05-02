@@ -21,12 +21,12 @@ public class MemberSlot {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "member_requested_id")
-    private User member_requested;
+    @JoinColumn(name = "requested_id")
+    private User requested;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "member_accepted_id")
-    private User member_accepted;
+    @JoinColumn(name = "accepted_id")
+    private User accepted;
 
     private Timestamp startTimeStamp;
     private Timestamp endTimeStamp;
