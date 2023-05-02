@@ -1,9 +1,6 @@
 package com.example.timingconsensusscheduler.controllers;
 
-import com.example.timingconsensusscheduler.dto.SigninUserInputDto;
-import com.example.timingconsensusscheduler.dto.SigninUserResponseDto;
-import com.example.timingconsensusscheduler.dto.SignupUserInputDto;
-import com.example.timingconsensusscheduler.dto.SignupUserResponseDto;
+import com.example.timingconsensusscheduler.dto.*;
 import com.example.timingconsensusscheduler.services.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -31,5 +28,15 @@ public class AuthController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(authService.loginUser(request));
+    }
+
+
+    @CrossOrigin("http://localhost:3000")
+    @PostMapping("/update-password")
+    public ResponseEntity<Boolean> updatePassword(
+            @RequestBody @Valid UpdatePasswordRequestDto body
+    ) {
+        authService.changePassword(body);
+        return ResponseEntity.status(HttpStatus.OK).body(true);
     }
 }
