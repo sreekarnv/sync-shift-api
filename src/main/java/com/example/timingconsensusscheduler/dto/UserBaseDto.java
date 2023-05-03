@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import jakarta.validation.constraints.Null;
 import lombok.Data;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.time.LocalTime;
 
 @Data
@@ -26,12 +24,15 @@ public class UserBaseDto {
     String getName() {
         return name;
     }
+
     String getEmail() {
         return email;
     }
+
     Integer getId() {
         return id;
     }
+
     String getRole() {
         return role;
     }
@@ -39,5 +40,8 @@ public class UserBaseDto {
     LocalTime getDefaultStartAvailableTime() {
         return defaultStartAvailableTime;
     }
-    LocalTime getDefaultEndAvailableTime() {return defaultEndAvailableTime;}
+
+    LocalTime getDefaultEndAvailableTime() {
+        return defaultEndAvailableTime;
+    }
 }

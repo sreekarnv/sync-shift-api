@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -56,8 +57,7 @@ public class FacilityController {
     @CrossOrigin("http://localhost:3000")
     @PostMapping("/slots/{id}")
     public ResponseEntity<Boolean> bookFacilitySlot(
-            @PathVariable Integer id, @RequestBody @Valid BookFacilitySlotRequestDto body)
-    {
+            @PathVariable Integer id, @RequestBody @Valid BookFacilitySlotRequestDto body) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         var user = (User) auth.getPrincipal();
         facilitySlotService.bookSlot(

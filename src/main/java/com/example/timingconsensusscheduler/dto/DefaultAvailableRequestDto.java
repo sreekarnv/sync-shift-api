@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DefaultAvailableRequestDto {
-    @NotNull(message =  "Please provide startTime")
+    @NotNull(message = "Please provide startTime")
     @NotBlank(message = "startTime cannot be empty")
     private String startTime;
 
-    @NotNull(message =  "Please provide endTime")
+    @NotNull(message = "Please provide endTime")
     @NotBlank(message = "endTime cannot be empty")
     private String endTime;
 }

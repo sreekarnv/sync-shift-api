@@ -11,7 +11,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="facilities")
+@Table(name = "facilities")
 public class Facility {
     @Id
     @GeneratedValue

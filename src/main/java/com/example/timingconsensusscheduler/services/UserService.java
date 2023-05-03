@@ -1,4 +1,5 @@
 package com.example.timingconsensusscheduler.services;
+
 import lombok.*;
 
 import com.example.timingconsensusscheduler.dto.SignupUserInputDto;
@@ -30,7 +31,7 @@ public class UserService {
                 .password(passwordEncoder.encode(data.getPassword()))
                 .role(role)
                 .build();
-       return userRepository.save(user);
+        return userRepository.save(user);
     }
 
     public User getOneByEmail(String email) {

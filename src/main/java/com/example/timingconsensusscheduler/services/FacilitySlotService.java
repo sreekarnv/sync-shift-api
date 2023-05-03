@@ -6,6 +6,7 @@ import com.example.timingconsensusscheduler.entity.User;
 import com.example.timingconsensusscheduler.repository.FacilitySlotRespository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -28,7 +29,7 @@ public class FacilitySlotService {
     }
 
     public void bookSlot(Integer facility_id, User user, Timestamp start, Timestamp end) {
-        Facility f =  facilityService.getOneById(facility_id).orElseThrow();
+        Facility f = facilityService.getOneById(facility_id).orElseThrow();
         var fs = FacilitySlot.builder()
                 .facility(f)
                 .user(user)

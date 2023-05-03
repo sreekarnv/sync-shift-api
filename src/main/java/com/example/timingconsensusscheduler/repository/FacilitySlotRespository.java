@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface FacilitySlotRespository extends JpaRepository<FacilitySlot, Integer> {
     List<FacilitySlot> findFacilitySlotsByFacility_Id(Integer facility_id);
+
     List<FacilitySlot> findFacilitySlotsByUser(User user);
 
     List<FacilitySlot> findFacilitySlotsByUser_Id(Integer id);

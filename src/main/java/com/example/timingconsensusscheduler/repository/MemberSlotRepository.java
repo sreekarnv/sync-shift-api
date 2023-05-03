@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface MemberSlotRepository extends JpaRepository<MemberSlot, Integer> {
     List<MemberSlot> findAllByAccepted(User user);
+
     List<MemberSlot> findAllByRequested(User user);
 }
 

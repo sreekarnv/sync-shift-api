@@ -74,8 +74,8 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResponseEntity<Map<String, List<String>>> handleAuthenticationException(Exception ex) {
         var message = Objects.equals(ex.getMessage(), "Bad credentials")
-            ? "Invalid Credentials. Please provide your correct email and password"
-            : ex.getMessage();
+                ? "Invalid Credentials. Please provide your correct email and password"
+                : ex.getMessage();
 
         List<String> errors = Collections.singletonList(message);
         return ResponseEntity

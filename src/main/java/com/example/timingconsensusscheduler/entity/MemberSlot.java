@@ -1,12 +1,8 @@
 package com.example.timingconsensusscheduler.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 @Data
@@ -14,7 +10,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="member_slot")
+@Table(name = "member_slot")
 public class MemberSlot {
     @Id
     @GeneratedValue

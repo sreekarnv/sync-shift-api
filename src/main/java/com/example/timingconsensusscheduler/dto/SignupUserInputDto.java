@@ -15,12 +15,12 @@ public class SignupUserInputDto {
     @Size(min = 3, max = 30, message = "Invalid Name: Must be of 3 - 30 characters")
     private String name;
 
-    @NotNull(message =  "Please provide you email address")
+    @NotNull(message = "Please provide you email address")
     @NotBlank(message = "Your email address cannot be empty")
     @Email(message = "Please provide a valid email address")
     private String email;
 
-    @NotNull(message =  "Please provide your password")
+    @NotNull(message = "Please provide your password")
     @NotBlank(message = "Password cannot be empty")
     @Size(min = 6, message = "Password must atleast contain 6 characters")
     private String password;

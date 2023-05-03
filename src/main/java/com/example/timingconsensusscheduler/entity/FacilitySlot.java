@@ -13,20 +13,20 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="facility_slot")
+@Table(name = "facility_slot")
 public class FacilitySlot {
-        @Id
-        @GeneratedValue
-        private Integer id;
+    @Id
+    @GeneratedValue
+    private Integer id;
 
-        @ManyToOne(fetch = FetchType.EAGER)
-        @JoinColumn(name = "user_id")
-        private User user;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-        @ManyToOne(fetch = FetchType.EAGER)
-        @JoinColumn(name = "facility_id")
-        private Facility facility;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "facility_id")
+    private Facility facility;
 
-        private Timestamp startTimeStamp;
-        private Timestamp endTimeStamp;
+    private Timestamp startTimeStamp;
+    private Timestamp endTimeStamp;
 }

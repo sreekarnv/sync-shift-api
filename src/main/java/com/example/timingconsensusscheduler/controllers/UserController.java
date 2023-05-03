@@ -6,10 +6,7 @@ import com.example.timingconsensusscheduler.dto.DefaultAvailableResponseDto;
 import com.example.timingconsensusscheduler.entity.FacilitySlot;
 import com.example.timingconsensusscheduler.entity.MemberSlot;
 import com.example.timingconsensusscheduler.entity.User;
-import com.example.timingconsensusscheduler.services.FacilitySlotService;
-import com.example.timingconsensusscheduler.services.JwtService;
-import com.example.timingconsensusscheduler.services.MemberSlotService;
-import com.example.timingconsensusscheduler.services.UserService;
+import com.example.timingconsensusscheduler.services.*;
 import jakarta.validation.Valid;
 import lombok.*;
 import org.springframework.http.HttpStatus;
@@ -33,8 +30,8 @@ public class UserController {
 
     @GetMapping("/")
     public ResponseEntity<List<User>> getMembers() {
-       var users = userService.getAll();
-       return ResponseEntity
+        var users = userService.getAll();
+        return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(users);
     }
@@ -44,7 +41,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body("Yo!!");
     }
 
-//    Logged in user facility slots
+    //    Logged in user facility slots
     @GetMapping("/slots")
     public ResponseEntity<List<FacilitySlot>> getLoggedInUserFacilitySlots() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -53,14 +50,14 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(slots);
     }
 
-//    User facility slots
+    //    User facility slots
     @GetMapping("/slots/{id}")
     public ResponseEntity<List<FacilitySlot>> getUserFacilitySlots(@PathVariable Integer id) {
         var slots = facilitySlotService.findFacilitySlotsByUser_Id(id);
         return ResponseEntity.status(HttpStatus.OK).body(slots);
     }
 
-//    User details
+    //    User details
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserDetail(@PathVariable Integer id) {
         var user = userService.findOneById(id);
@@ -84,7 +81,7 @@ public class UserController {
                 DefaultAvailableResponseDto
                         .builder()
                         .token(token)
-                .build()
+                        .build()
         );
     }
 
